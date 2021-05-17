@@ -1,6 +1,15 @@
 # covid19_vaccine_availability_tracker
 
-How to use ?
+## What is it ?
+
+To get the available slots for the given states in a time period of 2 weeks (both states and time period are configurable)
+
+## Parameters
+1. states can be configured in config.py
+2. weeks range can be configued in config.py
+3. Age limit, vaccine (covaxin, sputnik, covishield), dose (first, second or both) can be configured in `__init__.py` as paramters to function `get_available_slots_by_state_id_and_dates` #todo make these configurable
+
+## How to use ?
 
 1. Login to https://selfregistration.cowin.gov.in/ using mobile OTP
 2. From the request headers get the
