@@ -3,7 +3,15 @@
 How to use ?
 
 1. Login to https://selfregistration.cowin.gov.in/ using mobile OTP
-2. From the request headers get the `authorization` header value and in `config.py` set the value of `auth_bearer` to it. 
+2. From the request headers get the
+
+    a) `authorization` header value 
+
+    b) `if-none-match` header value 
+
+    and replace these in `config.py` 
+
+
 3. run the program `python __init__.py`
 
 A token works for 12 hours atleast (still counting and will update the lifetime accordingly)
@@ -31,6 +39,7 @@ Age_limit=45, Vaccine=COVAXIN, District_name=Central Delhi, DATE=17-05-2021, Pin
 Age_limit=45, Vaccine=COVAXIN, District_name=Central Delhi, DATE=17-05-2021, Pincode=110007, Center=Hindu Rao Hospital DH SITE 1, available_capacity_dose1=0, available_capacity_dose2=4
 Age_limit=45, Vaccine=COVAXIN, District_name=Central Delhi, DATE=17-05-2021, Pincode=110007, Center=Hindu Rao Hospital SITE 6, available_capacity_dose1=0, available_capacity_dose2=7
 Age_limit=45, Vaccine=COVAXIN, District_name=Central Delhi, DATE=17-05-2021, Pincode=110007, Center=Hindu Rao Hospital SITE 5, available_capacity_dose1=1, available_capacity_dose2=5
+
 Age_limit=45, Vaccine=COVAXIN, District_name=Central Delhi, DATE=17-05-2021, Pincode=110007, Center=Hindu Rao Hospital SITE 4, available_capacity_dose1=2, available_capacity_dose2=7
 Age_limit=45, Vaccine=COVAXIN, District_name=Central Delhi, DATE=18-05-2021, Pincode=110007, Center=Hindu Rao Hospital DH SITE 1, available_capacity_dose1=0, available_capacity_dose2=9
 Age_limit=45, Vaccine=COVAXIN, District_name=Central Delhi, DATE=18-05-2021, Pincode=110007, Center=Hindu Rao Hospital SITE 5, available_capacity_dose1=0, available_capacity_dose2=10
