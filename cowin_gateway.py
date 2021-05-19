@@ -19,7 +19,6 @@ def get_vaccine_centers_by_district_and_date(scheme, hostname, headers, district
     url = build_url(scheme, hostname, api)
     print url
     centers = do_get_request(url, headers).json()["centers"]
-    print centers
     return centers
 
 
