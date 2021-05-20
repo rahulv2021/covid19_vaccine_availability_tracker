@@ -1,3 +1,4 @@
+import copy
 import cowin_gateway
 import config
 import datetime
@@ -46,7 +47,7 @@ def update_records_in_database(available_slots):
         cursor.execute(query)
         connection.commit()
 
-def get_records_from_database(start_time, vaccine, state_name, age_limit, dose_1=False, dose_2=False):
+def get_updated_records_from_database(start_time, vaccine, state_name, age_limit, dose_1=False, dose_2=False):
     records = []
 
     query = vaccine_slot.VaccineSlot.get_updated_records_query(start_time, vaccine, state_name, age_limit, dose_1, dose_2)
@@ -83,10 +84,10 @@ if __name__ == "__main__":
         date_format = "%Y-%m-%d %H:%M:%S"
         start_time = datetime.datetime.now().strftime(date_format)
         dates = []
-        token = config.tokens[count%3]
-        config.headers["authorization"] = config.headers["authorization"].format(token=token)
-        headers = config.headers
-        print "Using token %s " % (config.headers["authorization"])
+        token = config.tokens[1]
+        headers = copy.deepcopy(config.headers)
+        headers["authorization"] = headers["authorization"].format(token=token)
+        print "Using token %s " % (headers["authorization"])
         # Get first date of each week for given week ranges. Default 2 weeks
         for week in range(0, config.week_range):
             date = datetime.datetime.now() + datetime.timedelta(weeks=week)
@@ -112,7 +113,7 @@ if __name__ == "__main__":
                 for age_limit in config.age_limits:
                     for dose in config.vaccines[vaccine][age_limit]:
                         # get recent updated records from database for covaxin 18
-                        updated_slots = get_records_from_database(start_time=start_time, vaccine=vaccine, state_name=state, age_limit=age_limit, **{dose: config.vaccines[vaccine][age_limit][dose]})
+                        updated_slots = get_updated_records_from_database(start_time=start_time, vaccine=vaccine, state_name=state, age_limit=age_limit, **{dose: config.vaccines[vaccine][age_limit][dose]})
                         print "Updated records for %s, %s, %s" %(vaccine, age_limit, dose)
                         for record in updated_slots:
                             print "Sending message for record"

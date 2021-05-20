@@ -1,5 +1,7 @@
 CREATE database vaccine_slot_tracker;
 
+USE vaccine_slot_tracker;
+
 CREATE TABLE `vaccine_slot` (
     `center_id` INT NOT NULL,
     `pincode` INT NOT NULL,

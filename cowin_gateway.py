@@ -29,7 +29,7 @@ def build_url(scheme, hostname, api):
 
 
 
-@retry(Exception, max_retries=7, delay=5, backoff=2)
+@retry(Exception, max_retries=10, delay=2, backoff=2)
 def do_get_request(url, headers, timeout=30):
     ret = requests.get(url=url, timeout=timeout, headers=headers)
     ret.raise_for_status()
