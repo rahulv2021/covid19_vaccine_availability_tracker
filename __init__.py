@@ -28,6 +28,8 @@ def get_available_slots_by_state_id_and_dates(scheme, hostname, headers, state_i
                                                                   vaccine=slot["vaccine"],
                                                                   district_name=center["district_name"],
                                                                   pincode=center["pincode"],
+                                                                  state_id=state_id,
+                                                                  district_id=district_id,
                                                                   state_name=center["state_name"].lower(),
                                                                   center_name=center["name"],
                                                                   center_id=center["center_id"],
