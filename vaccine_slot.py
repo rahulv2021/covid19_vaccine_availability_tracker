@@ -53,14 +53,14 @@ class VaccineSlot:
         return query
 
     @staticmethod
-    def get_updated_records_query(start_time, vaccine, state_name, age_limit, dose_1=False, dose_2=False):
+    def get_updated_records_query(start_time, vaccine, state_id, district_id, age_limit, dose_1=False, dose_2=False):
         if not dose_1 and not dose_2:
             return ""  # Need to specify atleast the criteria to get updated records based on dose1 or dose2
 
         query = """
         SELECT CAST(slot_date AS char) as "slot date", age_limit as age_category, vaccine, pincode, district_name as district, center_name as center, available_capacity_dose1, available_capacity_dose2 from vaccine_slot
-        WHERE vaccine like '%{vaccine}%' and state_name='{state}' and age_limit={age_limit} and (
-        """.format(start_time=start_time, vaccine=vaccine, state=state_name, age_limit=age_limit)
+        WHERE vaccine like '%{vaccine}%' and state_id={state_id} and district_id={district_id} and age_limit={age_limit} and (
+        """.format(start_time=start_time, vaccine=vaccine, state_id=state_id, district_id=district_id, age_limit=age_limit)
         if dose_1:
             query += " (timestamp_update_dose1 > '{start_time}' and available_capacity_dose1>5)".format(
                 start_time=start_time)
