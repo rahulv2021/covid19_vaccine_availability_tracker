@@ -68,7 +68,7 @@ vaccines = {
             "dose_2": False,
         },
         45: {
-            "dose_1": False,
+            "dose_1": True,
             "dose_2": False,
         },
     },
