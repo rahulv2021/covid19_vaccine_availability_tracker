@@ -36,9 +36,8 @@ def get_available_slots_by_state_id_and_district_id_and_dates(scheme, hostname, 
 
     print "Total api calls = %s" % (api_calls)
     # Order by age limit, vaccine, district, date, pincode, available doses
-    sorted_slots = sorted(available_slots, key=lambda slot: (slot.age_limit, slot.vaccine, slot.district_name,
-                                                             slot.date, slot.pincode, slot.available_capacity_dose1, slot.available_capacity_dose2))
-
+    sorted_slots = sorted(available_slots, key=lambda slot: (slot.district_id, slot.center_id, slot.age_limit, slot.vaccine,
+                                                             slot.date))
     # Filter unique slots
     # The json sometimes has ambiguous slots with same date
     # If that's the case then consider the max capacity among those slots to notify people
@@ -48,8 +47,9 @@ def get_available_slots_by_state_id_and_district_id_and_dates(scheme, hostname, 
             unique_slots.append(slot)
             continue
         previous_slot = unique_slots[-1]
-        last_slot_index = len(unique_slots) -1
-        if slot.age_limit == previous_slot.age_limit and slot.vaccine == previous_slot.vaccine and slot.date==previous_slot.date:
+        if slot.center_id == previous_slot.center_id and slot.age_limit == previous_slot.age_limit and slot.vaccine == previous_slot.vaccine and slot.date==previous_slot.date:
+            print "\n======Duplicate slot found"
+            print slot
             slot.available_capacity_dose1 = max(slot.available_capacity_dose1, previous_slot.available_capacity_dose1)
             slot.available_capacity_dose2 = max(slot.available_capacity_dose2, previous_slot.available_capacity_dose2)
             unique_slots[-1] = slot
