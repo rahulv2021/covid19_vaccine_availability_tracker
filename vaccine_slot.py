@@ -17,12 +17,14 @@ class VaccineSlot:
         self.available_capacity_dose2 = available_capacity_dose2
 
     def __repr__(self):
-        return "Age_limit={age_limit}, Vaccine={vaccine}, District_name={district_name}, DATE={date}, Pincode={pincode}, Center={center_name}, available_capacity_dose1={available_capacity_dose1}, available_capacity_dose2={available_capacity_dose2}".format(
+        return "Age_limit={age_limit}, Vaccine={vaccine}, District_id={district_id}, Center_id={center_id}, District_name={district_name}, Center={center_name}, DATE={date}, Pincode={pincode}, available_capacity_dose1={available_capacity_dose1}, available_capacity_dose2={available_capacity_dose2}".format(
             date=self.date,
             age_limit=self.age_limit,
             vaccine=self.vaccine,
+            district_id=self.district_id,
             district_name=self.district_name,
             pincode=self.pincode,
+            center_id=self.center_id,
             center_name=self.center_name,
             available_capacity_dose1=self.available_capacity_dose1,
             available_capacity_dose2=self.available_capacity_dose2)
@@ -71,4 +73,6 @@ class VaccineSlot:
                 start_time=start_time)
         query += ")"
 
+        # order by clause
+        query += " order by 'slot date'"
         return query
