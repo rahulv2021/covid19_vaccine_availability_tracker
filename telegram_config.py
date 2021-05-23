@@ -1,4 +1,5 @@
-bot_token = ''
+bot_tokens = [
+]
 
 chat_ids = {
     '18_covaxin_delhi': '-1001426221910',
@@ -26,5 +27,7 @@ chat_ids = {
     '45_covaxin_haryana_dose_1': '-1001447182128',
     '45_covaxin_haryana_dose_2': '-1001222312284',
     '45_covishield_haryana_dose_1': '-1001472559780',
-    '45_covishield_haryana_dose_2': '-1001227150288'
+    '45_covishield_haryana_dose_2': '-1001227150288',
+    '45_covaxin_karnal_dose_2': '-1001460697173',
+    '18_covaxin_karnal_dose_1': '-1001261548420'
 }

@@ -26,7 +26,7 @@ headers = {
 }
 
 
-state_ids = {
+states = {
     'delhi': {
         'id': 9,
         'district_ids': []
@@ -34,6 +34,25 @@ state_ids = {
     'haryana': {
         'id': 12,
         'district_ids': [188]
+    },
+    'karnal': {
+        'id': 12,
+        'district_ids': [203]
+    }
+}
+
+exceptions = {
+    'karnal': {
+        'covaxin': {
+            18: {
+                'dose_1': True,
+                'dose_2': False
+            },
+            45: {
+                'dose_1': False,
+                'dose_2': True
+            }
+        }
     }
 }
 
