@@ -1,4 +1,5 @@
-bot_token = ''
+bot_tokens = [
+]
 
 chat_ids = {
     '18_covaxin_delhi': '-1001426221910',
