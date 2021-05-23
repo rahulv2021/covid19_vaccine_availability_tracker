@@ -36,7 +36,6 @@ def get_available_slots_by_state_id_and_district_id_and_dates(scheme, hostname, 
     # Order by age limit, vaccine, district, date, pincode, available doses
     sorted_slots = sorted(available_slots, key=lambda slot: (slot.district_id, slot.center_id, slot.age_limit, slot.vaccine,
                                                              slot.date))
-    print "\n===============Total sorted slots = %s" % (len(sorted_slots))
     # Filter unique slots
     # The json sometimes has ambiguous slots with same date
     # If that's the case then consider the max capacity among those slots to notify people
@@ -54,8 +53,6 @@ def get_available_slots_by_state_id_and_district_id_and_dates(scheme, hostname, 
             unique_slots[-1] = slot
         else:
             unique_slots.append(slot)
-
-    print "\n===============Total unique slots = %s" %(len(unique_slots))
     return unique_slots
 
 
@@ -177,7 +174,6 @@ if __name__ == "__main__":
                                                                                                             district_id,
                                                                                                             dates,
                                                                                                             request_start_time)
-                    time.sleep(1)
                     # save updated records from database
                     update_slots_in_database(available_slots_in_district)
 
