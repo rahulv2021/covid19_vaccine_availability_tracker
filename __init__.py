@@ -110,7 +110,7 @@ def get_dates_from_weeks_range():
         dates.append(date.strftime("%d-%m-%Y"))
     return dates
 
-def send_notifications_for_updated_slots_in_district(start_time, state_id, district_id):
+def send_notifications_for_updated_slots_in_district(start_time, state, state_id, district_id):
     # Send notifications on Telegram
     slot_notifier = SlotNotifier()
     for vaccine in config.vaccines:
@@ -165,12 +165,12 @@ if __name__ == "__main__":
                                                                                                             district_id,
                                                                                                             dates,
                                                                                                             request_start_time)
-
+                    time.sleep(1)
                     # save updated records from database
                     update_slots_in_database(available_slots_in_district)
 
                     # Send notifications on Telegram
-                    send_notifications_for_updated_slots_in_district(request_start_time, state_id, district_id)
+                    send_notifications_for_updated_slots_in_district(request_start_time, state, state_id, district_id)
         except Exception as e:
             print ("Exception was raised. message = %s" % (e))
         finally:
