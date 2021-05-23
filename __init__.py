@@ -8,8 +8,6 @@ from database_connection import DatabaseConnection
 from slot_notifier import SlotNotifier
 
 # Tweak the parameters in this function as per your requirement. By default fetches availability for all ages, all vaccines and all doses (first and second)
-
-
 def get_available_slots_by_state_id_and_district_id_and_dates(scheme, hostname, headers, state_id, district_id, dates, start_time, dose_1=True, dose_2=True, age_limits=[18, 45], vaccines=["covaxin", "covishield", "sputnik"]):
     api_calls = 1
     available_slots = []
@@ -38,6 +36,7 @@ def get_available_slots_by_state_id_and_district_id_and_dates(scheme, hostname, 
     # Order by age limit, vaccine, district, date, pincode, available doses
     sorted_slots = sorted(available_slots, key=lambda slot: (slot.district_id, slot.center_id, slot.age_limit, slot.vaccine,
                                                              slot.date))
+    print "\n===============Total sorted slots = %s" % (len(sorted_slots))
     # Filter unique slots
     # The json sometimes has ambiguous slots with same date
     # If that's the case then consider the max capacity among those slots to notify people
@@ -55,6 +54,8 @@ def get_available_slots_by_state_id_and_district_id_and_dates(scheme, hostname, 
             unique_slots[-1] = slot
         else:
             unique_slots.append(slot)
+
+    print "\n===============Total unique slots = %s" %(len(unique_slots))
     return unique_slots
 
 
@@ -113,13 +114,24 @@ def get_dates_from_weeks_range():
 def send_notifications_for_updated_slots_in_district(start_time, state, state_id, district_id):
     # Send notifications on Telegram
     slot_notifier = SlotNotifier()
-    for vaccine in config.vaccines:
-        for age_limit in config.age_limits:
-            for dose in config.vaccines[vaccine][age_limit]:
+
+    vaccines = config.vaccines
+    age_limits = config.age_limits
+
+    is_exception = False
+    if state in config.exceptions:
+        is_exception = True
+        vaccines = config.exceptions[state]
+
+    for vaccine in vaccines:
+        if is_exception:
+            age_limits = config.exceptions[state][vaccine].keys()
+        for age_limit in age_limits:
+            for dose in vaccines[vaccine][age_limit]:
                 # get recent updated records from database for covaxin 18
                 updated_slots_in_district = get_updated_slots_from_database(
-                    start_time=start_time, vaccine=vaccine, state_id=state_id, district_id=district_id, age_limit=age_limit, **{dose: config.vaccines[vaccine][age_limit][dose]})
-                print "Updated records for %s, %s, %s" % (vaccine, age_limit, dose)
+                    start_time=start_time, vaccine=vaccine, state_id=state_id, district_id=district_id, age_limit=age_limit, **{dose: vaccines[vaccine][age_limit][dose]})
+                print "Updated records for %s, %s, %s, %s" % (state, vaccine, age_limit, dose)
                 for record in updated_slots_in_district:
                     print "Sending message for record"
                     message = get_formatted_message(
@@ -148,10 +160,10 @@ if __name__ == "__main__":
 
             program_start_time = datetime.datetime.now().strftime(date_format)
 
-            for state in config.state_ids:
-                state_id = config.state_ids[state]["id"]
+            for state in config.states:
+                state_id = config.states[state]["id"]
 
-                district_ids = config.state_ids[state]["district_ids"]
+                district_ids = config.states[state]["district_ids"]
                 if not district_ids:
                     district_ids = cowin_gateway.get_districts_by_state_id(
                         config.scheme, config.hostname, headers, state_id)
