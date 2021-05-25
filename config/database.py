@@ -1,4 +1,4 @@
-config = {
+connection_string = {
     "host": "localhost",
     "user": "tracker",
     "password": "password123",

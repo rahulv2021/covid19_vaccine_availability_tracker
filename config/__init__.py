@@ -1,14 +1,10 @@
-
 tokens = [
-    rahul_2_auth_bearer,
-    rahul_3_auth_bearer,
-    rahul_1_auth_bearer,
+    token_mobile,
 ]
 
 hostname = "cdn-api.co-vin.in"
 
 scheme = "https"
-
 
 headers = {
     'authority': 'cdn-api.co-vin.in',
@@ -34,11 +30,11 @@ states = {
     'haryana': {
         'id': 12,
         'district_ids': [188]
-    },
-    'karnal': {
-        'id': 12,
-        'district_ids': [203]
     }
+    # 'karnal': {
+    #     'id': 12,
+    #     'district_ids': [203]
+    # }
 }
 
 exceptions = {
