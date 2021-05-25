@@ -1,6 +1,6 @@
 import requests
 import time
-from decorators import retry
+from utils.decorators import retry
 
 
 def get_districts_by_state_id(scheme, hostname, headers, state_id):

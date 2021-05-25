@@ -1,13 +1,13 @@
-from database_config import config
+from config.database import connection_string
 import pymysql
 
 
 class DatabaseConnection:
     def __init__(self):
-        self.host = config["host"]
-        self.user = config["user"]
-        self.password = config["password"]
-        self.database = config["database"]
+        self.host = connection_string["host"]
+        self.user = connection_string["user"]
+        self.password = connection_string["password"]
+        self.database = connection_string["database"]
 
     def get_connection(self):
         connection = pymysql.connect(

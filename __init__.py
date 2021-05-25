@@ -1,10 +1,10 @@
 import copy
-import cowin_gateway
 import config
 import datetime
 import vaccine_slot
 from collections import OrderedDict
-from database_connection import DatabaseConnection
+from gateway import cowin_api
+from database.connection import DatabaseConnection
 from slot_notifier import SlotNotifier
 
 # Tweak the parameters in this function as per your requirement. By default fetches availability for all ages, all vaccines and all doses (first and second)
@@ -12,7 +12,7 @@ def get_available_slots_by_state_id_and_district_id_and_dates(scheme, hostname, 
     api_calls = 1
     available_slots = []
     for date in dates:
-        vaccine_centers = cowin_gateway.get_vaccine_centers_by_district_and_date(scheme, hostname, headers, district_id, date)
+        vaccine_centers = cowin_api.get_vaccine_centers_by_district_and_date(scheme, hostname, headers, district_id, date)
         for center in vaccine_centers:
             for slot in center["sessions"]:
                 if slot["min_age_limit"] in age_limits and \
@@ -135,7 +135,7 @@ def send_notifications_for_updated_slots_in_district(start_time, state, state_id
                         record, **{dose: config.vaccines[vaccine][age_limit][dose]})
                     print message
                     slot_notifier.send_message(
-                        age_limit, vaccine, state, message, dose)
+                       age_limit, vaccine, state, message, dose)
 
 def get_headers_for_cowin_apis():
     """
@@ -162,7 +162,7 @@ if __name__ == "__main__":
 
                 district_ids = config.states[state]["district_ids"]
                 if not district_ids:
-                    district_ids = cowin_gateway.get_districts_by_state_id(
+                    district_ids = cowin_api.get_districts_by_state_id(
                         config.scheme, config.hostname, headers, state_id)
 
                 for district_id in district_ids:
