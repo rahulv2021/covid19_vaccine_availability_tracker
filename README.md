@@ -2,7 +2,9 @@
 
 ## What is it ?
 
-To get the available slots for the given states in a time period of 2 weeks (both states and time period are configurable)
+Developed this project to monitor real-time COVID-19 vaccine availability across various vaccination centres in India and alert users promptly about the availability through automated notifications via Telegram channels, thereby facilitating easier access to vaccination appointments and promoting public health awareness.
+
+The functionality is to get the available slots for the given states in India in a time period of 2 weeks (both states and time period are configurable)
 
 ## Parameters
 1. states can be configured in config.py
