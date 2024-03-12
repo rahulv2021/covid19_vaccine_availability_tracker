@@ -59,5 +59,4 @@ Age_limit=45, Vaccine=COVAXIN, District_name=Central Delhi, DATE=18-05-2021, Pin
 ```
 
 # TODO
-1. Cron and notify on mobile when our requirement matches (For ex. 18+ covaxin anywhere in delhi)   URGENT and IMPORTANT
-2. automate OTP login (figuring out some ways) NOT URGENT as current token has lifetime of 12+ hrs 
+1. automate OTP login (figuring out some ways) NOT URGENT as current token has lifetime of 12+ hrs 
